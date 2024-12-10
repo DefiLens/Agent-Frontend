@@ -8,8 +8,12 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import Header from "./components/base/Header";
 import { useAccount } from "wagmi";
+import { BiSidebar } from "react-icons/bi";
+import Sidebar from "./components/base/Sidebar";
+import { DataState } from "./context/dataProvider";
+import Message from "./components/chat/Message";
 
-interface Message {
+interface IMessage {
   role: "user" | "assistant" | "tool";
   content: string;
   name?: string;
@@ -24,7 +28,9 @@ interface Coin {
 }
 
 export default function CryptoAIChat() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const { recentChats, selectedChat, setSelectedChat, messageContainerRef } =
+    DataState();
+  const [messages, setMessages] = useState<IMessage[]>([]);
   const [inputMessage, setInputMessage] = useState("top 3 coins");
   const [isStreaming, setIsStreaming] = useState(false);
   const [currentStreamMessage, setCurrentStreamMessage] = useState("");
@@ -61,7 +67,11 @@ export default function CryptoAIChat() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message: messageToSend, history: messages, address }),
+        body: JSON.stringify({
+          message: messageToSend,
+          history: messages,
+          address,
+        }),
       });
 
       // Create EventSource
@@ -326,66 +336,22 @@ export default function CryptoAIChat() {
       {content}
     </ReactMarkdown>
   );
+  const [toggleSidebar, setToggleSidebar] = useState(false);
+  const [showIntegrations, setShowIntegrations] = useState(false);
 
   return (
     <div className="flex flex-col !max-h-[100svh] h-full bg-zinc-950 text-white">
-      <Header />
-      <div className="flex h-[calc(100svh-60px)]">
-        {/* Left Sidebar - Top Coins */}
-        <div className="w-2/12 bg-zinc-900 p-4 border-r border-zinc-800 overflow-y-auto"></div>
-
-        {/* Right Side - Chat Area */}
-        <div className="flex-1 flex flex-col bg-zinc-950">
-          {/* Messages Container */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {messages.map(renderMessage)}
-
-            {/* Streaming Message */}
-            {isStreaming && (
-              <div className="flex w-full justify-start">
-                <div className="flex items-start max-w-[80%]">
-                  <div className="flex flex-col items-center mx-2">
-                    <FaRobot className="text-2xl text-green-400 mb-1" />
-                  </div>
-                  <div className="p-3 rounded-lg bg-zinc-800 text-zinc-200">
-                    {renderMarkdown(currentStreamMessage)}
-                    <span className="animate-pulse">|</span>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* Input Area */}
-          <div className="p-4 bg-transparent">
-            <div className="flex items-center max-w-3xl w-full mx-auto">
-              <input
-                type="text"
-                value={inputMessage}
-                onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={(e) => e.key === "Enter" && sendMessage()}
-                placeholder="Ask about cryptocurrencies..."
-                className="
-              flex-1 p-3 rounded-lg 
-              bg-zinc-800 text-white 
-              focus:outline-none focus:ring-2 focus:ring-blue-500
-              mr-2
-            "
-              />
-              <button
-                onClick={sendMessage}
-                disabled={isStreaming}
-                className="
-              bg-blue-600 hover:bg-blue-700 
-              p-3 rounded-lg 
-              transition-colors 
-              disabled:opacity-50 disabled:cursor-not-allowed
-            "
-              >
-                <FaPaperPlane />
-              </button>
-            </div>
+      <div className="fixed bottom-2 right-2 text-sm bg-zinc-950 px-3 py-0.5 rounded-full border border-amber-500 text-amber-500 tracking-wide">Beta</div>
+      <div className="flex">
+        <div
+          className={`w-72 max-h-[100svh] relative overflow-hidden transform transition-all duration-150`}
+        >
+          <Sidebar />
+        </div>
+        <div className="max-h-[100svh] h-full w-full">
+          <Header />
+          <div className="h-[calc(100svh-60px)]">
+            <Message />
           </div>
         </div>
       </div>

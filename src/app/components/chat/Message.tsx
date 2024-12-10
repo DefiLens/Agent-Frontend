@@ -1,12 +1,10 @@
-"use client;";
+"use client";
 import React, { useEffect, useRef, useState } from "react";
-import Header from "../base/Header";
 import { useAccount } from "wagmi";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { FaPaperPlane, FaRobot, FaUser } from "react-icons/fa";
 import { DataState } from "@/app/context/dataProvider";
 import AutoResizableTextarea from "./AutoResizableTextarea";
 import axios from "axios";
@@ -37,10 +35,8 @@ const Message = () => {
     messages,
     setMessages,
     fetchChats,
-    setRecentChats,
   } = DataState();
   const { isConnected } = useAccount();
-  //   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
@@ -206,7 +202,7 @@ const Message = () => {
         if (event.functionName === "fetch_top_coins") {
           setTopCoins(event.result);
         }
-        setMessages((prev) => [
+        setMessages((prev: any) => [
           ...prev,
           {
             role: "tool",
@@ -227,7 +223,7 @@ const Message = () => {
 
   const finalizeStreaming = (inputMessage: string, chatId: string) => {
     if (resultRef.current) {
-      setMessages((prev) => [
+      setMessages((prev: any) => [
         ...prev,
         {
           role: "assistant",
@@ -410,10 +406,7 @@ const Message = () => {
 
   return (
     <div className="flex-1 flex flex-col bg-zinc-900 h-full">
-      {/* Messages Container */}
       <div className="flex-1 overflow-y-auto space-y-4">
-        {/* {messages.map(renderMessage)} */}
-
         <div
           className={`relative h-full flex-1 overflow-hidden bg-1 p-4 flex flex-col gap-7 rounded-2xl max-w-4xl mx-auto`}
         >
@@ -429,9 +422,6 @@ const Message = () => {
                 {isStreaming && (
                   <div className="flex w-full justify-start">
                     <div className="flex items-start max-w-[80%]">
-                      {/* <div className="flex flex-col items-center mx-2">
-                        <FaRobot className="text-2xl text-green-400 mb-1" />
-                      </div> */}
                       <div className="p-3 rounded-lg bg-zinc-800 text-zinc-200">
                         <span>
                           {isThinking && (
@@ -454,22 +444,6 @@ const Message = () => {
                 )}
                 <div ref={messagesEndRef}></div>
               </div>
-              {/* {messages?.map((message, index) => {
-                return (
-                  <Result
-                    key={index}
-                    prompt={message.prompt}
-                    markdown={message?.text}
-                    // sources={message?.sources}
-                    // relatedSearches={message.relatedSearches}
-                    isloading={isloading}
-                  />
-                );
-              })} */}
-              {/* {messages.map((message) => (
-              <MessageDisplay key={message.chat} message={message} />
-            ))} */}
-              {/* {isloading && <MessageLoading prompt={prompt} />} */}
               <div ref={bottomRef} />
             </div>
           )}

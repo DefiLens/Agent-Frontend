@@ -40,7 +40,6 @@ const DataProvider = ({ children }: any) => {
     if (address) {
       fetchChats();
     }
-    // }, [address, selectedChat]);
   }, [address]);
 
   const transformChatData = async (data: any) => {

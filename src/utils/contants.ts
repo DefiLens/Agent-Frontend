@@ -1,4 +1,4 @@
-export const API_URL = "http://localhost:4500"
+export const API_URL = "https://agent-backend-lv9j.onrender.com";
 
 export const meta = {
     title: "Memecoins Rebalancer blurb",

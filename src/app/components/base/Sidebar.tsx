@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+"use client"
+import React, { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { DataState } from "@/app/context/dataProvider";
 
@@ -11,18 +12,6 @@ const Sidebar = () => {
     setMessages,
     fetchMessages,
   } = DataState();
-
-  //   const handleLogout = () => {
-  //     localStorage.removeItem("user_google_id");
-  //     navigate("/login");
-  //   };
-
-  //   useEffect(() => {
-  //     const storedUserGoogleId = localStorage.getItem("user_google_id");
-  //     if (!storedUserGoogleId) {
-  //       navigate("/login");
-  //     }
-  //   }, [navigate]);
 
   return (
     <div className="bg-zinc-900 flex flex-col gap-1 h-full justify-between overflow-hidden border-zinc-800 border-r">

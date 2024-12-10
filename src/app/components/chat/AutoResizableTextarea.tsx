@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+"use client";
+import React from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { IoSend } from "react-icons/io5";
 import Loader from "@/shared/Loader";

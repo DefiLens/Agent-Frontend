@@ -1,15 +1,13 @@
+"use client"
+
 import React, { useEffect, useRef, useState } from "react";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { IoIosArrowDown } from "react-icons/io";
 import { LuLogOut } from "react-icons/lu";
-import { IoWalletOutline } from "react-icons/io5";
-import { FiCompass, FiDownload, FiUpload } from "react-icons/fi";
-import Link from "next/link";
 import useClickOutside from "@/hooks/useClickOutside";
 import AvatarIcon from "@/shared/Avatar";
 import { shorten } from "@/utils/helper";
 import CopyButton from "@/shared/CopyButton";
-import { usePathname } from "next/navigation";
 import { API_URL } from "@/utils/contants";
 import axios from "axios";
 import { MdOutlineFileDownload } from "react-icons/md";
@@ -17,7 +15,6 @@ import Image from "next/image";
 import DepositModal from "../modals/DepositModal";
 
 const Header: React.FC = () => {
-  const location = usePathname();
   const [showDropDown, setShowDropdown] = useState(false);
   const walletAddressRef = useRef(null);
   const { address, isConnected } = useAccount();
@@ -40,12 +37,6 @@ const Header: React.FC = () => {
     }
   }
 
-  // Effect to save user address after successful connection
-  // useEffect(() => {
-  //   if (isConnected && address) {
-  //     handleLogin(address);
-  //   }
-  // }, [isConnected, address]);
   const [userAddress, setUserAddress] = useState<string>("");
   const [usdcBalance, setUsdcBalance] = useState<string>("");
   const [loadingUserAddress, setLoadingUserAddress] = useState<boolean>(false);
@@ -72,45 +63,7 @@ const Header: React.FC = () => {
     <header className="bg-zinc-950 h-[60px] flex items-center border-b border-zinc-700">
       <div className="w-full flex justify-between items-center px-4">
         <div className="flex items-center">
-          {/* <div className="flex items-center">
-            <img
-              height={50}
-              width={50}
-              src="/assets/snapbam.svg"
-              alt="DefiLens"
-              className="h-8 w-8 mr-2 block"
-            />
-            <img
-              height={50}
-              width={50}
-              src="/assets/snapbam_text.svg"
-              alt="DefiLens"
-              className="w-24 mr-2"
-            />
-          </div> */}
-          <div className="hidden sm:flex items-end border-zinc-500 h-10 ml-10">
-            {/* {tabList.map((item) => {
-              return (
-                <Link key={item.name} href={item.href}>
-                  <div
-                    className={`flex items-center justify-center gap-2 text-[.7rem] sm:text-sm px-3 sm:px-3.5 py-2 transition-all duration-300 tracking-wide whitespace-nowrap font-semibold cursor-pointer ${
-                      location === item.href
-                        ? " text-cyan-600"
-                        : "text-zinc-400 hover:text-zinc-100"
-                    }`}
-                  >
-                    {item.name}
-                    {item.href === "/new-pool" && (
-                      <span className="text-[10px] flex items-center gap-2 bg-zinc-800 rounded-xl text-zinc-200 p-0.5 px-2">
-                        <span className="block animate-ping h-1 w-1 bg-green-500 rounded-full" />
-                        Live
-                      </span>
-                    )}
-                  </div>
-                </Link>
-              );
-            })} */}
-          </div>
+          <div className="hidden sm:flex items-end border-zinc-500 h-10 ml-10"></div>
         </div>
 
         {/* <CoinbaseButton /> */}
@@ -142,7 +95,6 @@ const Header: React.FC = () => {
               </div>
 
               <MdOutlineFileDownload className="hidden sm:inline text-xl" />
-              {/* <span className="hidden sm:inline">Deposit USDC</span> */}
             </button>
           )}
 
@@ -205,10 +157,3 @@ const Header: React.FC = () => {
 };
 
 export default Header;
-export const tabList = [
-  {
-    name: "Home",
-    href: "/",
-    icon: FiCompass,
-  },
-];

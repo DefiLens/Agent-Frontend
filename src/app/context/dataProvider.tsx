@@ -9,7 +9,7 @@ import React, {
 import BigNumber from "bignumber.js";
 import axios from "axios";
 import { useAccount } from "wagmi";
-import { API_URL } from "@/utils/contants";
+import { API_URL } from "@/utils/keys";
 BigNumber.config({ DECIMAL_PLACES: 10 });
 
 export const DataContext = createContext<any | null>(null);

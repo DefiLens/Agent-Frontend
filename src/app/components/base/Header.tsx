@@ -8,7 +8,7 @@ import useClickOutside from "@/hooks/useClickOutside";
 import AvatarIcon from "@/shared/Avatar";
 import { shorten } from "@/utils/helper";
 import CopyButton from "@/shared/CopyButton";
-import { API_URL } from "@/utils/contants";
+import { API_URL } from "@/utils/keys";
 import axios from "axios";
 import { MdOutlineFileDownload } from "react-icons/md";
 import Image from "next/image";

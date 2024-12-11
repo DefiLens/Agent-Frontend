@@ -8,7 +8,7 @@ import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { DataState } from "@/app/context/dataProvider";
 import AutoResizableTextarea from "./AutoResizableTextarea";
 import axios from "axios";
-import { API_URL } from "@/utils/contants";
+import { API_URL } from "@/utils/keys";
 import toast from "react-hot-toast";
 import Loader from "@/shared/Loader";
 
@@ -115,7 +115,7 @@ const Message = () => {
     resultRef.current = "";
 
     try {
-      const response = await fetch("http://localhost:4500/agent", {
+      const response = await fetch(`${API_URL}/agent`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

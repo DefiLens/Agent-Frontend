@@ -152,7 +152,7 @@ const Message = () => {
     const decoder = new TextDecoder();
     setIsThinking(false);
 
-    const processStream = async () => {
+    const processStream: any = async () => {
       try {
         while (true) {
           const { done, value } = await reader?.read()!;

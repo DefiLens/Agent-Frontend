@@ -89,6 +89,7 @@ const Message = () => {
       }
     } catch (error) {
       console.error("Error creating message:", error);
+      toast.error("Something went wrong");
     }
   };
 
@@ -139,6 +140,7 @@ const Message = () => {
       };
     } catch (error) {
       console.error("Error sending message:", error);
+      toast.error("Something went wrong");
       setIsStreaming(false);
     }
   };
@@ -179,6 +181,7 @@ const Message = () => {
         }
       } catch (error) {
         console.error("Stream reading error:", error);
+        toast.error("Something went wrong");
         setIsStreaming(false);
       }
     };
@@ -395,7 +398,8 @@ const Message = () => {
           <img
             src={src || ""}
             alt={alt || ""}
-            className="max-w-full h-auto my-4 rounded-lg border border-zinc-700"
+            // className="max-w-full h-auto my-4 rounded-lg border border-zinc-700"
+            className="max-w-full h-1 my-4 rounded-lg border border-zinc-700"
           />
         ),
       }}
@@ -405,17 +409,17 @@ const Message = () => {
   );
 
   return (
-    <div className="flex-1 flex flex-col bg-zinc-900 h-full">
+    <div className="flex-1 flex flex-col bg-zinc-900/50 h-full">
       <div className="flex-1 overflow-y-auto space-y-4">
         <div
-          className={`relative h-full flex-1 overflow-hidden bg-1 p-4 flex flex-col gap-7 rounded-2xl max-w-4xl mx-auto`}
+          className={`relative h-full flex-1 overflow-hidden bg-1 p-4 flex flex-col gap-5 rounded-2xl max-w-4xl mx-auto`}
         >
           {selectedChat != null && (
             <div
-              className="pb-1 relative overflow-auto scroll_hide flex-1"
+              className="relative overflow-auto scroll_hide flex-1"
               ref={messageContainerRef}
             >
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              <div className="flex-1 overflow-y-auto space-y-4">
                 {messages.map(renderMessage)}
 
                 {/* Streaming Message */}

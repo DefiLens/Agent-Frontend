@@ -314,7 +314,7 @@ const ChatItem = ({
                     <DropdownMenu.Item key={index} className="DropdownMenuItem">
                       <button
                         onClick={item.onClick}
-                        className="px-5 py-2 text-sm w-full text-left bg-1-hover hover:bg-zinc-800 focus:bg-gray-700 rounded-md transition-all duration-150 flex items-center gap-2"
+                        className="px-5 py-2 text-sm w-full text-left bg-1-hover hover:bg-zinc-800 focus:bg-gray-700 rounded-md transition-all duration-150 flex items-center gap-2 outline-none"
                       >
                         <item.icon />
                         {item.label}
@@ -326,45 +326,6 @@ const ChatItem = ({
             </DropdownMenu.Root>
           </span>
         )}
-
-        {/* <div className="hidden items-center space-x-2 group-hover:flex">
-          <div
-          className="relative"
-          onClick={(e) => {
-            e.stopPropagation();
-            onDropdownToggle(chat._id);
-            open={isOpen} onOpenChange={setIsOpen}
-          }}
-          >
-          <IoMdMore className="text-zinc-400 hover:text-white" />
-          
-          {isDropdownOpen && (
-            <div
-                className="absolute right-0 top-full mt-1 w-48 bg-zinc-800 rounded-lg shadow-lg z-50 border border-zinc-700"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onDropdownToggle(chat._id);
-                  }}
-                  className="flex items-center w-full px-4 py-2 text-left hover:bg-zinc-700 text-white"
-                >
-                  <IoMdShareAlt className="mr-2" /> Share
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onDropdownToggle(chat._id);
-                  }}
-                  className="flex items-center w-full px-4 py-2 text-left hover:bg-zinc-700 text-red-400"
-                >
-                  <IoMdTrash className="mr-2" /> Delete
-                </button>
-              </div>
-            )}
-          </div>
-        </div> */}
       </div>
     </div>
   );

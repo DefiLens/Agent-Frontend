@@ -25,7 +25,7 @@ const DataProvider = ({ children }: any) => {
   const fetchChats = async () => {
     try {
       const response = await axios.get(
-        `${API_URL}/chat?userAddress=${address}&limit=20`
+        `${API_URL}/chat?userAddress=${address}&limit=100`
       );
 
       const chats = response.data.chats;

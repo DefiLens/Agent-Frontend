@@ -1,10 +1,8 @@
 "use client";
 import React, { useState, useMemo, useRef } from "react";
-import { IoMdMore, IoMdShareAlt, IoMdTrash } from "react-icons/io";
+import { IoMdMore } from "react-icons/io";
 import { DataState } from "@/app/context/dataProvider";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { IoFilter } from "react-icons/io5";
-import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 import { LuPencil } from "react-icons/lu";
 import { LuTrash2 } from "react-icons/lu";
 import axios from "axios";
@@ -13,6 +11,7 @@ import { RxCross2 } from "react-icons/rx";
 import { MdCheck } from "react-icons/md";
 import toast from "react-hot-toast";
 import { useAccount } from "wagmi";
+
 const Sidebar = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const {
@@ -28,17 +27,21 @@ const Sidebar = () => {
     const now = new Date();
     const today = now.toDateString();
     const yesterday = new Date(now.getTime() - 86400000).toDateString();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
 
     // Categorized chats will now use a more complex structure
     const categorizedChats: {
       today: any[];
       yesterday: any[];
-      monthYearGroups: { [key: string]: any[] };
+      currentMonth: any[];
+      otherMonths: { [key: string]: any[] };
       yearGroups: { [key: string]: any[] };
     } = {
       today: [],
       yesterday: [],
-      monthYearGroups: {},
+      currentMonth: [],
+      otherMonths: {},
       yearGroups: {},
     };
 
@@ -56,16 +59,22 @@ const Sidebar = () => {
         const timeDiff = now.getTime() - chatDate.getTime();
         const oneYearInMilliseconds = 365 * 24 * 60 * 60 * 1000;
 
-        if (timeDiff < oneYearInMilliseconds) {
+        // Check if chat is in current month and year
+        if (
+          chatDate.getMonth() === currentMonth &&
+          chatDate.getFullYear() === currentYear
+        ) {
+          categorizedChats.currentMonth.push(chat);
+        } else if (timeDiff < oneYearInMilliseconds) {
           // For chats within the last year, group by month and year
           const monthYearKey = chatDate.toLocaleString("default", {
             month: "short",
             year: "numeric",
           });
-          if (!categorizedChats.monthYearGroups[monthYearKey]) {
-            categorizedChats.monthYearGroups[monthYearKey] = [];
+          if (!categorizedChats.otherMonths[monthYearKey]) {
+            categorizedChats.otherMonths[monthYearKey] = [];
           }
-          categorizedChats.monthYearGroups[monthYearKey].push(chat);
+          categorizedChats.otherMonths[monthYearKey].push(chat);
         } else {
           // For chats older than a year, group by year
           const yearKey = chatDate.getFullYear().toString();
@@ -83,7 +92,8 @@ const Sidebar = () => {
   const renderChatSection = (
     chats: any[],
     title: string,
-    sectionKey: string
+    sectionKey: string,
+    showDates: boolean = false
   ) => {
     if (chats.length === 0) return null;
 
@@ -103,6 +113,7 @@ const Sidebar = () => {
               setActiveDropdown(activeDropdown === id ? null : id);
             }}
             isDropdownOpen={activeDropdown === chat._id}
+            showDate={showDates}
           />
         ))}
       </div>
@@ -148,8 +159,16 @@ const Sidebar = () => {
           "yesterday-section"
         )}
 
-        {/* Render Month-Year Groups */}
-        {Object.entries(organizedChats.monthYearGroups)
+        {/* Render Current Month Chats with Dates */}
+        {renderChatSection(
+          organizedChats.currentMonth,
+          "December",
+          "current-month-section",
+          true
+        )}
+
+        {/* Render Other Month Groups */}
+        {Object.entries(organizedChats.otherMonths)
           .sort(([a], [b]) => new Date(b).getTime() - new Date(a).getTime())
           .map(([monthYear, chats]) =>
             renderChatSection(chats, monthYear, `month-year-${monthYear}`)
@@ -165,7 +184,6 @@ const Sidebar = () => {
     </div>
   );
 };
-
 // ChatItem component remains the same as in the previous implementation
 const ChatItem = ({
   chat,
@@ -284,11 +302,11 @@ const ChatItem = ({
               onOpenChange={() => onDropdownToggle(chat._id)}
             >
               <DropdownMenu.Trigger asChild>
-                <IoMdMore className="text-zinc-400 hover:text-white" />
+                <IoMdMore className="text-zinc-400 hover:text-white w-4" />
               </DropdownMenu.Trigger>
               <DropdownMenu.Portal>
                 <DropdownMenu.Content
-                  className="text-zinc-200 bg-zinc-900 shadow-lg p-2 border border-zinc-700 rounded-lg overflow-hidden z-20 space-y-1"
+                  className="text-zinc-200 bg-zinc-900 shadow-lg p-2 border border-zinc-700 rounded-lg overflow-hidden z-50 space-y-1"
                   sideOffset={8}
                 >
                   {[

@@ -462,17 +462,17 @@ const Message = () => {
                       width={50}
                       src="/assets/snapbam.svg"
                       alt="DefiLens"
-                      className="h-9 w-9 mr-3 block"
+                      className="w-8 h-9 md:h-9 md:w-9 mr-3 block"
                     />
                     <img
                       height={50}
                       width={50}
                       src="/assets/snapbam_text.svg"
                       alt="DefiLens"
-                      className="w-36 mr-2"
+                      className="w-28 md:w-36 mr-2"
                     />
                   </div>
-                  <span className="p-text text-lg sm:text-2xl flex items-center font-semibold">
+                  <span className="p-text text-lg md:text-2xl flex items-center font-semibold">
                     Your{" "}
                     <span>
                       <img src="/assets/base.svg" className="h-5 w-5 mx-2" />
@@ -480,7 +480,7 @@ const Message = () => {
                     Base AI Agent for trading
                   </span>
                 </div>
-                <div className="flex flex-col gap-4 w-full">
+                <div className="flex flex-col gap-3 md:gap-4 w-full">
                   <div className="md:p-0">
                     <AutoResizableTextarea
                       input={inputMessage}
@@ -489,7 +489,7 @@ const Message = () => {
                       handleSend={sendMessage}
                     />
                   </div>
-                  <ul className="flex gap-4 flex-wrap items-center justify-center">
+                  <ul className="flex flex-col md:flex-row gap-2 md:gap-4 flex-wrap items-center justify-center">
                     {suggestionsList?.map((suggestion: any, index: any) => (
                       <button
                         key={index}
@@ -501,7 +501,7 @@ const Message = () => {
                           sendMessage(suggestion);
                         }}
                         disabled={isStreaming}
-                        className="flex items-center gap-3 bg-zinc-800 rounded-lg s-text cursor-pointer text-sm md:text-sm font-medium text-nowrap px-5 py-1.5"
+                        className="flex items-center gap-3 bg-zinc-800 rounded-lg s-text cursor-pointer text-xs md:text-sm font-medium text-nowrap px-2 md:px-5 py-1 md:py-1.5"
                       >
                         {suggestion}
                       </button>

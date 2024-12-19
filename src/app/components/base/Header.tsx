@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useEffect, useRef, useState } from "react";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
@@ -119,7 +119,7 @@ const Header: React.FC = () => {
               {showDropDown && (
                 <div className="absolute top-14 right-0 z-50 flex flex-col justify-center items-start border-1 shadow-xl rounded-lg">
                   {/* SCW Address and Balance */}
-                  <div className="bg-zinc-950 border border-zinc-700 w-full relative flex flex-col p-4 gap-2 cursor-default rounded-xl min-w-80">
+                  <div className="bg-zinc-950 border border-zinc-700 w-full relative flex flex-col pr-3 py-2 pl-2 gap-2 cursor-default rounded-xl min-w-80">
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-2 p-2">
                         <div className="h-7 w-7 rounded-full overflow-hidden">
@@ -128,10 +128,7 @@ const Header: React.FC = () => {
                         <span className="text-white rounded-full text-sm sm:text-lg font-semibold">
                           {shorten(String(userAddress))}
                         </span>
-                        <CopyButton
-                          copy={String(userAddress)}
-                          className="text-xs"
-                        />
+                        <CopyButton copy={String(userAddress)} />
                       </div>
                       <div className="flex items-center gap-5">
                         <button onClick={() => disconnect()}>

@@ -37,8 +37,8 @@ const AutoResizableTextarea = ({
   return (
     <div className="flex flex-col gap-1">
       {messages.length > 0 && (
-        <div className="h-10 bg-white bg-opacity-10 w-full overflow-auto scroll_hide flex items-center px-2 rounded-lg">
-          <ul className="flex gap-4 items-center justify-center">
+        <div className="h-8 md:h-10 bg-white bg-opacity-10 w-full overflow-auto scroll_hide flex items-center px-1 md:px-2 rounded-lg">
+          <ul className="flex gap-2 md:gap-4 items-center justify-center">
             {suggestionsList?.map((suggestion: any, index: any) => (
               <button
                 key={index}
@@ -50,7 +50,7 @@ const AutoResizableTextarea = ({
                   setInput(suggestion);
                 }}
                 disabled={loading}
-                className="flex items-center gap-3 bg-zinc-900/70 rounded-lg s-text cursor-pointer text-sm md:text-sm font-medium text-nowrap px-5 py-1.5"
+                className="flex items-center gap-3 bg-zinc-900/70 rounded-lg s-text cursor-pointer text-xs md:text-sm font-medium text-nowrap px-2 md:px-5 py-1 md:py-1.5"
               >
                 {suggestion}
               </button>
@@ -58,7 +58,7 @@ const AutoResizableTextarea = ({
           </ul>
         </div>
       )}
-      <div className="w-full flex items-center justify-center bg-white bg-opacity-10 rounded-lg p-2 gap-3">
+      <div className="w-full flex items-center justify-center bg-white bg-opacity-10 rounded-lg p-1 first-letter:md:p-2 gap-3">
         <div className="flex-1 flex items-center">
           <TextareaAutosize
             value={input}
@@ -88,10 +88,10 @@ const AutoResizableTextarea = ({
                 loading ? "bg-opacity-40" : ""
               }`}
             >
-              <IoSend className="text-lg" />
+              <IoSend className="text-base md:text-lg" />
             </button>
           ) : (
-            <div className="h-8 w-8 flex justify-center items-center">
+            <div className="h-7 w-7 md:h-8 md:w-8 flex justify-center items-center">
               <Loader />
             </div>
           )}
